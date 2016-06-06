@@ -43,13 +43,13 @@ dictionary = c.step_up(dictionary)
 print(dictionary)
 
 # get all values we have entered so far
-print(c.get_down(""))
+print(c.get_down_key(""))
 
 # get all values besides in ab
-print(c.get_down("", "ab"))
+print(c.get_down_key("", "ab"))
 
 # get all a values besides aba
-print(c.get_down("a", "aba"))
+print(c.get_down_key("a", "aba"))
 
 """
 All good here :D

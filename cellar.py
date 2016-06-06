@@ -34,14 +34,16 @@ this constructor takes NO INPUT arguments
 
 METHODS
 dive(key) - get the pointydictionary corresponding to a key
-stepup(dictionary) - get the pointydictionary in which the pointydictionary, dictionary,
+step_up(dictionary) - get the pointydictionary in which the pointydictionary, dictionary,
                      is embedded
+step_up_key(key) - get the pointydictionary in which the pointydictionary corresponding to
+                    the key is embedded
 add(key, value) - add a value to the corresponding key
 get(key) - grab the list of values at the corresponding key (if they exist)
-get_down_dict(dictionary, avoid_dictionary) - grabs all values in the pointydictionary,
+get_down(dictionary, avoid_dictionary) - grabs all values in the pointydictionary,
                         dictionary, and all embedded pointydictionaries except for
                         avoid_dictionary and all embedded pointydictionaries
-get_down(key, avoid_key) - grabs all values in the pointydictionary corresponding to key
+get_down_key(key, avoid_key) - grabs all values in the pointydictionary corresponding to key
                         and all deeper pointydictionaries except avoid_key's dictionary
                         and all pointydictionaries within it
 
@@ -101,6 +103,19 @@ class Cellar:
         return dictionary.pointer
 
     """
+    This grabs the pointydictionary above the pointydictionary at the key
+
+        HOW IT WORKS:
+
+            * It just grabs the pointydictionary in the pointer above the dictionary at
+              the specified key
+    """
+
+    def step_up_key(self, key):
+        dictionary = self.dive(key)
+        return self.step_up(dictionary)
+
+    """
     This allows us to add a specific value under a specific index
 
         HOW IT WORKS
@@ -155,7 +170,7 @@ class Cellar:
             * we return the values list
     """
 
-    def get_down_dict(self, dictionary, avoid_dictionary=PointyDictionary()):
+    def get_down(self, dictionary, avoid_dictionary=PointyDictionary()):
         values = []
 
         if None in dictionary:
@@ -181,7 +196,7 @@ class Cellar:
             * we return the values
     """
 
-    def get_down(self, key, avoid_key=None):
+    def get_down_key(self, key, avoid_key=None):
         dictionary = self.dive(key)
 
         if not avoid_key:
