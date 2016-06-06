@@ -19,7 +19,7 @@ class BeerCellar(Cellar):
             * return the list thus found
     """
 
-    def _parser(self, url):
+    def _parse(self, url):
         path = urlparse(url).path
         expression = compile("[^\/]{1,}")
         pieces = findall(expression)
