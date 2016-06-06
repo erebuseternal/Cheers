@@ -15,7 +15,7 @@ None. Each pointydictionary's pointer points to the pointydictionary it is embed
 HOW
 This data structure is all about reaching specific pointydictionaries. Each pointydictionary is reached
 using a particular key. This works via the following. The key is parsed into a list using the
-PARSER function specific to this class. Each element of this list represents a key. The first
+_parser function specific to this class. Each element of this list represents a key. The first
 element is used to graba pointydictionary within the base_dictionary, the next key is used to
 grab a pointydictionary within that pointydictionary and so forth until we run out of keys.
 The pointydictionary we result with is the pointydictionary corresponding to that key. The
@@ -48,19 +48,17 @@ get_down(key, avoid_key) - grabs all values in the pointydictionary correspondin
 **********
 
 CHANGING THE PARSER
-To change the parser simply create a new Cellar class that inherits from this one
-and set the PARSER in this class definition to whatever function you want
+To change the _parser simply override it in a class inheriting from the Cellar class
 
 RULES FOR PARSERS
+    * must have for inputs, self and a key input value (can be any object you want)
     * they must return a list that does not contain any None values
 """
 
 
 class Cellar:
-    def test_parser(self, string):
+    def _parser(self, string):
         return string
-
-    PARSER = test_parser
 
     def __init__(self):
         self.base_dictionary = PointyDictionary()
@@ -80,7 +78,7 @@ class Cellar:
     """
 
     def dive(self, key):
-        elements = self.PARSER(key)
+        elements = self._parser(key)
 
         current_dictionary = self.base_dictionary
 
