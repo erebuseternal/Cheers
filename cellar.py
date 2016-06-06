@@ -37,11 +37,11 @@ dive(key) - get the pointydictionary corresponding to a key
 stepup(dictionary) - get the pointydictionary in which the pointydictionary, dictionary,
                      is embedded
 add(key, value) - add a value to the corresponding key
-get_down(key) - grab the list of values at the corresponding key (if they exist)
+get(key) - grab the list of values at the corresponding key (if they exist)
 get_down_dict(dictionary, avoid_dictionary) - grabs all values in the pointydictionary,
                         dictionary, and all embedded pointydictionaries except for
                         avoid_dictionary and all embedded pointydictionaries
-getup(key, avoid_key) - grabs all values in the pointydictionary corresponding to key
+get_down(key, avoid_key) - grabs all values in the pointydictionary corresponding to key
                         and all deeper pointydictionaries except avoid_key's dictionary
                         and all pointydictionaries within it
 
