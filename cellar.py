@@ -1,7 +1,3 @@
-def test_parser(self, string):
-    return string
-
-
 class PointyDictionary(dict):
     def __init__(self, obj=None):
         super(PointyDictionary, self).__init__()
@@ -61,6 +57,9 @@ RULES FOR PARSERS
 
 
 class Cellar:
+    def test_parser(self, string):
+        return string
+
     PARSER = test_parser
 
     def __init__(self):
@@ -192,4 +191,6 @@ class Cellar:
         else:
             avoid_dictionary = self.dive(avoid_key)
             return self.get_down_dict(dictionary, avoid_dictionary)
+
+
 
