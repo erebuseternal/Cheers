@@ -1,10 +1,10 @@
-def enlist(key):
-    return [key]
+def test_parser(self, string):
+    return string
 
 
 class PointyDictionary(dict):
     def __init__(self, obj=None):
-        super(PointDictionary, self).__init__()
+        super(PointyDictionary, self).__init__()
         self.pointer = obj
 
 
@@ -41,8 +41,8 @@ dive(key) - get the pointydictionary corresponding to a key
 stepup(dictionary) - get the pointydictionary in which the pointydictionary, dictionary,
                      is embedded
 add(key, value) - add a value to the corresponding key
-get(key) - grab the list of values at the corresponding key (if they exist)
-getup_dict(dictionary, avoid_dictionary) - grabs all values in the pointydictionary,
+get_down(key) - grab the list of values at the corresponding key (if they exist)
+get_down_dict(dictionary, avoid_dictionary) - grabs all values in the pointydictionary,
                         dictionary, and all embedded pointydictionaries except for
                         avoid_dictionary and all embedded pointydictionaries
 getup(key, avoid_key) - grabs all values in the pointydictionary corresponding to key
@@ -61,7 +61,7 @@ RULES FOR PARSERS
 
 
 class Cellar:
-    PARSER = enlist
+    PARSER = test_parser
 
     def __init__(self):
         self.base_dictionary = PointyDictionary()
@@ -81,13 +81,13 @@ class Cellar:
     """
 
     def dive(self, key):
-        elements = PARSER(key)
+        elements = self.PARSER(key)
 
         current_dictionary = self.base_dictionary
 
         for element in elements:
             if element not in current_dictionary:
-                current_dictionary[element] = PointDictionary(current_dictionary)
+                current_dictionary[element] = PointyDictionary(current_dictionary)
             current_dictionary = current_dictionary[element]
 
         return current_dictionary
@@ -100,7 +100,7 @@ class Cellar:
             * It just grabs the pointydictionary in the pointer
     """
 
-    def stepup(self, dictionary):
+    def step_up(self, dictionary):
         return dictionary.pointer
 
     """
@@ -119,7 +119,7 @@ class Cellar:
 
         if None not in dictionary:
             dictionary[None] = []
-        values = current_dictionary[None]
+        values = dictionary[None]
 
         values.append(value)
 
@@ -133,8 +133,8 @@ class Cellar:
               returning an empty list otherwise)
     """
 
-    def get(self, key)
-        dictionary = dive(key)
+    def get(self, key):
+        dictionary = self.dive(key)
 
         if None in dictionary:
             return dictionary[None]
@@ -158,7 +158,7 @@ class Cellar:
             * we return the values list
     """
 
-    def getup_dict(self, dictionary, avoid_dictionary=PointDictionary()):
+    def get_down_dict(self, dictionary, avoid_dictionary=PointyDictionary()):
         values = []
 
         if None in dictionary:
@@ -167,7 +167,7 @@ class Cellar:
         for key in dictionary:
             if key is not None and dictionary[key] is not avoid_dictionary:
                 new_dictionary = dictionary[key]
-                values.extend(self.getup_dict(new_dictionary, avoid_dictionary))
+                values.extend(self.get_down_dict(new_dictionary, avoid_dictionary))
 
         return values
 
@@ -184,12 +184,12 @@ class Cellar:
             * we return the values
     """
 
-    def getup(self, key, avoid_key=None):
+    def get_down(self, key, avoid_key=None):
         dictionary = self.dive(key)
 
         if not avoid_key:
-            return self.getup_dict(dictionary)
+            return self.get_down_dict(dictionary)
         else:
             avoid_dictionary = self.dive(avoid_key)
-            return self.getup_dict(dictionary, avoid_dictionary)
+            return self.get_down_dict(dictionary, avoid_dictionary)
 
