@@ -5,6 +5,7 @@ Cheers,
 Marcel
 """
 
+
 class CellarNode(object):
     """
     CellarNode(parent=None)
@@ -19,6 +20,7 @@ class CellarNode(object):
         self.parent = parent
         self.children = {}
         self.dweller = None
+
 
 class CellarDweller(object):
     """
@@ -48,6 +50,7 @@ class CellarDweller(object):
         new_dweller.elements.extend(self.elements)
         new_dweller.elements.extend(other.elements)
         return new_dweller
+
 
 class Cellar:
     """
